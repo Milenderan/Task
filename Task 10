@@ -1,0 +1,85 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import java.time.LocalDate;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class DatePicker {
+
+	public static void main(String[] args) {
+		
+		
+		WebDriverManager.chromedriver().setup();
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("https://jqueryui.com/datepicker/");
+		driver.manage().window().maximize();
+		
+		WebElement iframeElement = driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+		driver.switchTo().frame(iframeElement);
+		
+		WebElement datePicker = driver.findElement(By.xpath("//input[@id='datepicker']"));
+		datePicker.click();
+		
+		WebElement nextBtn = driver.findElement(By.cssSelector("a.ui-datepicker-next"));
+	    nextBtn.click();
+	    
+	    WebElement dateElement = driver.findElement(By.xpath("//a[text()='22']"));
+        dateElement.click();
+        
+       
+		String selectedDate = datePicker.getAttribute("value");
+        System.out.println("Selected date: " + selectedDate);
+		
+		
+	}
+	
+}
+
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+
+import io.github.bonigarcia.wdm.WebDriverManager;
+
+public class Dropbbale {
+
+	public static void main(String[] args) {
+		
+		
+           WebDriverManager.chromedriver().setup();
+           WebDriver driver = new ChromeDriver();
+           
+           driver.get("https://jqueryui.com/droppable/");
+           driver.manage().window().maximize();
+           
+           WebElement iframeElement = driver.findElement(By.cssSelector("iframe.demo-frame"));
+           driver.switchTo().frame(iframeElement);
+
+           
+           WebElement sourceElement = driver.findElement(By.id("draggable"));
+           WebElement targetElement = driver.findElement(By.id("droppable"));
+           
+           Actions actions = new Actions(driver);
+           actions.dragAndDrop(sourceElement, targetElement).perform();
+           
+           String targetBackgroundColor = targetElement.getCssValue("background-color");
+           System.out.println("Target element background color after drop: " + targetBackgroundColor);
+           
+           String targetText = targetElement.getText();
+           if ("Dropped!".equals(targetText)) {
+               System.out.println("Drag and drop operation was successful.");
+           } else {
+               System.out.println("Drag and drop operation failed. Current text: " + targetText);
+           }
+           
+           
+}
+	
+}
+
